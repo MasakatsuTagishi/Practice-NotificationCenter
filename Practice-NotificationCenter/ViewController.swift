@@ -11,13 +11,13 @@ class ViewController: UIViewController {
 
     @IBOutlet private weak var label: UILabel!
 
-    private let changeTextModel = ChangeTextModel()
+    private let textModel = TextModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpLabel()
+        setupLabel()
         NotificationCenter.default.addObserver(
-            forName: .ChangeTextModelDidChangeText,
+            forName: .textModelDidChangeText,
             object: nil,
             queue: OperationQueue.main,
             using: { [weak self] _ in
@@ -27,24 +27,24 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func pressedButton(_ sender: Any) {
-        changeTextModel.changeText()
+        textModel.changeText()
     }
 
-    private func setUpLabel() {
-        label.text = changeTextModel.text
+    private func setupLabel() {
+        label.text = textModel.text
     }
 
     private func updateLabel() {
-        label.text = changeTextModel.text
+        label.text = textModel.text
     }
 }
 
 extension Notification.Name {
-    static let ChangeTextModelDidChangeText
+    static let textModelDidChangeText
     = Notification.Name("ChangeTextModel.didChangeText")
 }
 
-class ChangeTextModel {
+class TextModel {
 
     private(set) var text = "ボタンを押してください"
 
@@ -55,7 +55,7 @@ class ChangeTextModel {
 
     private func notify() {
         NotificationCenter.default.post(
-            name: .ChangeTextModelDidChangeText,
+            name: .textModelDidChangeText,
             object: nil
         )
     }
